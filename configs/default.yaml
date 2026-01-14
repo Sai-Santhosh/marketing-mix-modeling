@@ -1,0 +1,62 @@
+# MMM Analytics Default Configuration
+# Copy and modify this file for your use case
+
+# =============================================================================
+# Channel Configuration
+# =============================================================================
+channels:
+  - name: search
+    adstock_decay: 0.4
+    saturation_alpha: 2.0
+    saturation_k: 600
+
+  - name: social
+    adstock_decay: 0.3
+    saturation_alpha: 2.0
+    saturation_k: 400
+
+  - name: display
+    adstock_decay: 0.6
+    saturation_alpha: 2.0
+    saturation_k: 500
+
+  - name: audio
+    adstock_decay: 0.5
+    saturation_alpha: 2.0
+    saturation_k: 300
+
+# =============================================================================
+# Data Configuration
+# =============================================================================
+target_column: kpi
+date_column: date
+
+# =============================================================================
+# Feature Engineering
+# =============================================================================
+include_trend: true
+include_seasonality: true
+seasonality_period: 52  # weeks (52 for yearly seasonality)
+n_harmonics: 2  # Fourier harmonics for seasonality
+
+# =============================================================================
+# Model Configuration
+# =============================================================================
+model:
+  alphas:
+    - 0.01
+    - 0.1
+    - 1.0
+    - 10.0
+    - 100.0
+  cv_folds: 5
+  fit_intercept: true
+  scale_features: true
+
+# =============================================================================
+# Optimization Configuration
+# =============================================================================
+optimization:
+  method: scipy  # Options: scipy, greedy, gradient
+  max_iterations: 100
+  tolerance: 1.0e-6

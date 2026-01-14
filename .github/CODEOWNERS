@@ -1,0 +1,18 @@
+# Code Owners for MMM Analytics
+# These owners will be automatically requested for review on PRs
+
+# Default owner for everything
+* @saisanthoshv
+
+# Core library
+/mmm_analytics/ @saisanthoshv
+
+# Tests
+/tests/ @saisanthoshv
+
+# CI/CD
+/.github/ @saisanthoshv
+
+# Documentation
+/README.md @saisanthoshv
+/docs/ @saisanthoshv

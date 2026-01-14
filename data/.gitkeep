@@ -1,0 +1,8 @@
+# Data Directory
+
+This directory is used for:
+- Input data files (CSV, Parquet)
+- Generated synthetic data
+- Intermediate data artifacts
+
+Note: Data files are git-ignored. Only .gitkeep is tracked.
