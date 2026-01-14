@@ -2,32 +2,39 @@
   <img src="https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
   <img src="https://img.shields.io/badge/Code%20Style-Ruff-purple?style=for-the-badge" alt="Ruff">
+  <img src="https://img.shields.io/badge/Tests-151%20Passed-success?style=for-the-badge" alt="Tests">
+</p>
+
+<h1 align="center">MMM Analytics</h1>
+
+<p align="center">
+  <strong>Production-Grade Marketing Mix Modeling for Ad Tech & Media Analytics</strong>
 </p>
 
 <p align="center">
-  <a href="#installation">Installation</a> •
-  <a href="#quick-start">Quick Start</a> •
-  <a href="#features">Features</a> •
-  <a href="#documentation">Documentation</a> •
-  <a href="#contributing">Contributing</a>
+  <a href="#-key-features">Features</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-architecture">Architecture</a> •
+  <a href="#-documentation">Documentation</a> •
+  <a href="#-contributing">Contributing</a>
 </p>
 
 ---
 
-# MMM Analytics
-
-**Production-grade Marketing Mix Modeling for Ad Tech & Media Analytics**
-
-A comprehensive Python toolkit for Marketing Mix Modeling (MMM) that enables data scientists to measure advertising effectiveness, attribute marketing impact, and optimize budget allocation across media channels.
-
 ## 🎯 What is Marketing Mix Modeling?
 
-Marketing Mix Modeling is a statistical analysis technique used to estimate the impact of various marketing tactics on sales and other business outcomes. This package implements:
+Marketing Mix Modeling (MMM) is a statistical analysis technique used to measure the impact of various marketing tactics on sales and business outcomes. This package provides a complete, production-ready toolkit for:
 
-- **Adstock Transformation**: Captures the carryover effect of advertising (geometric decay)
-- **Saturation Curves**: Models diminishing returns using Hill functions
-- **Ridge Regression**: Regularized linear model for stable coefficient estimation
-- **Budget Optimization**: Algorithms to reallocate spend for maximum ROI
+- **Measuring advertising effectiveness** across channels
+- **Attributing marketing impact** to specific media investments
+- **Optimizing budget allocation** for maximum ROI
+
+<p align="center">
+  <img src="assets/model_results.png" alt="Model Results Dashboard" width="100%">
+</p>
+
+---
 
 ## ✨ Key Features
 
@@ -40,7 +47,153 @@ Marketing Mix Modeling is a statistical analysis technique used to estimate the 
 | 🎨 **Visualization Suite** | Publication-ready plots and charts |
 | 🖥️ **CLI Interface** | Command-line tools for automation |
 | 🧪 **Synthetic Data** | Built-in data generator with known ground truth |
-| ✅ **Production Ready** | Type hints, tests, CI/CD, documentation |
+| ✅ **Production Ready** | Type hints, 151 tests, CI/CD, comprehensive docs |
+
+---
+
+## 🏗️ Architecture
+
+### System Overview
+
+```mermaid
+flowchart TB
+    subgraph Input["📥 Input Layer"]
+        A[Raw Marketing Data]
+        B[Configuration]
+    end
+    
+    subgraph Core["⚙️ Core Processing"]
+        C[Data Simulator]
+        D[Feature Engineer]
+        E[Marketing Mix Model]
+        F[Budget Optimizer]
+    end
+    
+    subgraph Transforms["🔄 Transformations"]
+        G[Adstock Transform]
+        H[Saturation Transform]
+    end
+    
+    subgraph Output["📤 Output Layer"]
+        I[Model Results]
+        J[Attribution Analysis]
+        K[Optimization Recommendations]
+        L[Visualizations]
+    end
+    
+    A --> D
+    B --> D
+    C --> A
+    D --> G
+    G --> H
+    H --> E
+    E --> I
+    E --> J
+    J --> F
+    F --> K
+    I --> L
+    J --> L
+    K --> L
+    
+    style Input fill:#e3f2fd
+    style Core fill:#fff3e0
+    style Transforms fill:#f3e5f5
+    style Output fill:#e8f5e9
+```
+
+### MMM Pipeline Flow
+
+```mermaid
+flowchart LR
+    subgraph Stage1["1️⃣ Data Preparation"]
+        A1[Load Data] --> A2[Validate Columns]
+        A2 --> A3[Auto-detect Channels]
+    end
+    
+    subgraph Stage2["2️⃣ Feature Engineering"]
+        B1[Apply Adstock] --> B2[Apply Saturation]
+        B2 --> B3[Add Trend/Seasonality]
+        B3 --> B4[Build Design Matrix]
+    end
+    
+    subgraph Stage3["3️⃣ Model Fitting"]
+        C1[Ridge Regression] --> C2[Cross-Validation]
+        C2 --> C3[Select Best Alpha]
+        C3 --> C4[Fit Final Model]
+    end
+    
+    subgraph Stage4["4️⃣ Analysis"]
+        D1[Calculate Metrics] --> D2[Attribution Analysis]
+        D2 --> D3[Confidence Intervals]
+        D3 --> D4[VIF Check]
+    end
+    
+    subgraph Stage5["5️⃣ Optimization"]
+        E1[Define Constraints] --> E2[Optimize Budget]
+        E2 --> E3[Calculate Lift]
+    end
+    
+    Stage1 --> Stage2 --> Stage3 --> Stage4 --> Stage5
+    
+    style Stage1 fill:#bbdefb
+    style Stage2 fill:#c8e6c9
+    style Stage3 fill:#fff9c4
+    style Stage4 fill:#ffccbc
+    style Stage5 fill:#e1bee7
+```
+
+### Component Architecture
+
+```mermaid
+classDiagram
+    class MMMPipeline {
+        +config: PipelineConfig
+        +feature_engineer: FeatureEngineer
+        +model: MarketingMixModel
+        +optimizer: BudgetOptimizer
+        +fit(data) PipelineResults
+        +predict(data) ndarray
+    }
+    
+    class FeatureEngineer {
+        +config: FeatureConfig
+        +fit(df) self
+        +transform(df) DataFrame
+        +get_channel_features() list
+    }
+    
+    class MarketingMixModel {
+        +config: ModelConfig
+        +fit(X, y) ModelResults
+        +predict(X) ndarray
+    }
+    
+    class BudgetOptimizer {
+        +method: OptimizationMethod
+        +optimize(spend, coef) OptimizationResult
+    }
+    
+    class AdstockTransformer {
+        +decay: float
+        +transform(x) ndarray
+        +inverse_transform(a) ndarray
+    }
+    
+    class SaturationTransformer {
+        +alpha: float
+        +k: float
+        +transform(x) ndarray
+        +marginal_response(x) ndarray
+    }
+    
+    MMMPipeline --> FeatureEngineer
+    MMMPipeline --> MarketingMixModel
+    MMMPipeline --> BudgetOptimizer
+    FeatureEngineer --> AdstockTransformer
+    FeatureEngineer --> SaturationTransformer
+```
+
+---
 
 ## 📦 Installation
 
@@ -65,6 +218,8 @@ pip install -e ".[dev]"
 - Matplotlib, Seaborn (visualization)
 - Click, Rich (CLI)
 
+---
+
 ## 🚀 Quick Start
 
 ### Python API
@@ -85,30 +240,6 @@ results = pipeline.fit(data)
 print(results.model_results.summary())
 ```
 
-**Output:**
-```
-============================================================
-MARKETING MIX MODEL RESULTS
-============================================================
-
-MODEL FIT METRICS:
-  R-squared:          0.9523
-  Adjusted R-squared: 0.9487
-  RMSE:               18.4521
-  MAE:                14.2103
-  MAPE:               4.82%
-  Durbin-Watson:      1.9234
-
-REGULARIZATION: alpha = 1.0
-
-CHANNEL CONTRIBUTION SHARE:
-  search_transformed: 38.24%
-  social_transformed: 25.67%
-  audio_transformed: 19.43%
-  display_transformed: 16.66%
-============================================================
-```
-
 ### Command Line Interface
 
 ```bash
@@ -125,13 +256,24 @@ mmm run --data data.csv --output ./results
 mmm init --output config.json
 ```
 
+---
+
 ## 📖 Documentation
 
-### Core Concepts
+### Core Transformations
 
-#### 1. Adstock Transformation
+#### Adstock Transformation
 
-Adstock models the carryover effect of advertising where the impact persists and decays over time.
+The adstock model captures the **carryover effect** of advertising, where the impact of an ad exposure persists and decays over time.
+
+**Mathematical formulation:**
+```
+A(t) = X(t) + decay × A(t-1)
+```
+
+<p align="center">
+  <img src="assets/adstock_transformation.png" alt="Adstock Transformation" width="100%">
+</p>
 
 ```python
 from mmm_analytics.core.transforms import AdstockTransformer
@@ -142,23 +284,9 @@ adstocked = transformer.transform(spend)
 # Result: [100.0, 50.0, 25.0, 12.5, 6.25]
 ```
 
-**Mathematical formulation:**
-```
-A(t) = X(t) + decay × A(t-1)
-```
+#### Saturation (Hill Function)
 
-#### 2. Saturation (Hill Function)
-
-The Hill function models diminishing returns at high spend levels.
-
-```python
-from mmm_analytics.core.transforms import SaturationTransformer
-
-transformer = SaturationTransformer(alpha=2.0, k=500.0)
-spend = [0, 250, 500, 750, 1000]
-saturated = transformer.transform(spend)
-# Result: [0.0, 0.2, 0.5, 0.692, 0.8]
-```
+The Hill function models **diminishing returns** at high spend levels.
 
 **Mathematical formulation:**
 ```
@@ -169,51 +297,74 @@ Where:
 - `α` (alpha): Shape parameter controlling curve steepness
 - `k`: Half-saturation point (EC50)
 
-#### 3. Feature Engineering
-
-Combine transformations to build the model design matrix:
-
-```python
-from mmm_analytics.core.features import FeatureEngineer, FeatureConfig, ChannelConfig
-
-config = FeatureConfig(
-    channels=[
-        ChannelConfig(name="search", adstock_decay=0.4, saturation_k=600),
-        ChannelConfig(name="social", adstock_decay=0.3, saturation_k=400),
-        ChannelConfig(name="display", adstock_decay=0.6, saturation_k=500),
-    ],
-    include_trend=True,
-    include_seasonality=True,
-)
-
-engineer = FeatureEngineer(config)
-X = engineer.fit_transform(data)
-```
-
-#### 4. Model Fitting
-
-Fit a Ridge regression model with cross-validated regularization:
+<p align="center">
+  <img src="assets/saturation_curves.png" alt="Saturation Curves" width="100%">
+</p>
 
 ```python
-from mmm_analytics.core.model import MarketingMixModel, ModelConfig
+from mmm_analytics.core.transforms import SaturationTransformer
 
-config = ModelConfig(
-    alphas=(0.01, 0.1, 1.0, 10.0, 100.0),
-    cv_folds=5,
-    scale_features=True,
-)
-
-model = MarketingMixModel(config)
-results = model.fit(X, y)
-
-print(f"R²: {results.metrics.r2:.4f}")
-print(f"Selected alpha: {results.selected_alpha}")
-print(f"\nChannel contributions:\n{results.attribution.contribution_share}")
+transformer = SaturationTransformer(alpha=2.0, k=500.0)
+spend = [0, 250, 500, 750, 1000]
+saturated = transformer.transform(spend)
+# Result: [0.0, 0.2, 0.5, 0.692, 0.8]
 ```
 
-#### 5. Budget Optimization
+---
 
-Optimize budget allocation across channels:
+### Channel Attribution
+
+The model calculates the contribution of each marketing channel to overall performance:
+
+<p align="center">
+  <img src="assets/channel_attribution.png" alt="Channel Attribution" width="100%">
+</p>
+
+---
+
+### Statistical Diagnostics
+
+Comprehensive metrics for model evaluation:
+
+<p align="center">
+  <img src="assets/metrics_table.png" alt="Model Metrics" width="60%">
+</p>
+
+**Available Metrics:**
+
+| Category | Metrics |
+|----------|---------|
+| **Goodness of Fit** | R², Adjusted R², RMSE, MAE, MAPE, WMAPE |
+| **Multicollinearity** | Variance Inflation Factor (VIF) |
+| **Autocorrelation** | Durbin-Watson, Ljung-Box Q-statistic |
+| **Normality** | Shapiro-Wilk, Jarque-Bera, D'Agostino K² |
+| **Uncertainty** | Bootstrap confidence intervals |
+
+---
+
+### Budget Optimization
+
+```mermaid
+flowchart LR
+    A[Current Allocation] --> B{Optimizer}
+    C[Channel Coefficients] --> B
+    D[Saturation Curves] --> B
+    E[Constraints] --> B
+    B --> F[Optimized Allocation]
+    B --> G[Expected Lift]
+    
+    style B fill:#ff9800
+    style F fill:#4caf50
+    style G fill:#4caf50
+```
+
+Three optimization methods available:
+
+| Method | Description | Best For |
+|--------|-------------|----------|
+| `scipy` | SLSQP constrained optimization | Complex constraints |
+| `greedy` | Iterative reallocation | Quick estimates |
+| `gradient` | Gradient descent | Large portfolios |
 
 ```python
 from mmm_analytics.core.optimizer import BudgetOptimizer, OptimizationConstraints
@@ -222,155 +373,22 @@ optimizer = BudgetOptimizer(method="scipy")
 
 constraints = OptimizationConstraints(
     total_budget=100000,
-    min_spend={"search": 10000},  # Minimum spend per channel
-    max_spend=50000,               # Maximum spend per channel
+    min_spend={"search": 10000},
+    max_spend=50000,
 )
 
 result = optimizer.optimize(
     current_spend=current_allocation,
     coefficients=model_coefficients,
-    saturation_params={"search": (2.0, 600), "social": (2.0, 400)},
     constraints=constraints,
 )
 
 print(result.summary())
 ```
 
-### Statistical Diagnostics
+---
 
-The package provides comprehensive diagnostic metrics:
-
-```python
-from mmm_analytics.diagnostics import calculate_model_diagnostics
-
-diagnostics = calculate_model_diagnostics(y_true, y_pred, X)
-print(diagnostics.summary())
-```
-
-**Available Metrics:**
-
-| Category | Metrics |
-|----------|---------|
-| Goodness of Fit | R², Adjusted R², RMSE, MAE, MAPE, WMAPE |
-| Multicollinearity | Variance Inflation Factor (VIF) |
-| Autocorrelation | Durbin-Watson, Ljung-Box Q-statistic |
-| Normality | Shapiro-Wilk, Jarque-Bera, D'Agostino K² |
-| Uncertainty | Bootstrap confidence intervals |
-
-### Visualization
-
-Generate publication-ready plots:
-
-```python
-from mmm_analytics.diagnostics.plots import MMMPlotter
-
-plotter = MMMPlotter(figsize=(12, 8), dpi=150)
-
-# Contribution share
-fig = plotter.plot_contribution_share(results.attribution.contribution_share)
-fig.savefig("contribution_share.png")
-
-# Actual vs Predicted
-fig = plotter.plot_actual_vs_predicted(y_actual, y_predicted)
-
-# Residual diagnostics
-fig = plotter.plot_residuals(results.residuals, results.predictions)
-
-# Response curves
-fig = plotter.plot_response_curves({
-    "search": (2.0, 600),
-    "social": (2.0, 400),
-})
-
-# Save all plots at once
-plotter.save_all_plots(pipeline_results, "./plots")
-```
-
-### Configuration
-
-Use YAML or JSON configuration files:
-
-```python
-from mmm_analytics.config import load_config, PipelineSettings
-
-# Load from file
-settings = load_config("config.yaml")
-
-# Or create programmatically
-from mmm_analytics.config import ChannelSettings, ModelSettings
-
-settings = PipelineSettings(
-    channels=[
-        ChannelSettings(name="search", adstock_decay=0.4),
-        ChannelSettings(name="social", adstock_decay=0.3),
-    ],
-    model=ModelSettings(alphas=[0.1, 1.0, 10.0], cv_folds=5),
-)
-```
-
-**Example config.yaml:**
-```yaml
-channels:
-  - name: search
-    adstock_decay: 0.4
-    saturation_alpha: 2.0
-    saturation_k: 600
-  - name: social
-    adstock_decay: 0.3
-    saturation_k: 400
-
-target_column: conversions
-include_trend: true
-include_seasonality: true
-
-model:
-  alphas: [0.01, 0.1, 1.0, 10.0]
-  cv_folds: 5
-
-optimization:
-  method: scipy
-  max_iterations: 100
-```
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-pytest tests -v
-
-# Run with coverage
-pytest tests --cov=mmm_analytics --cov-report=html
-
-# Run specific test module
-pytest tests/test_transforms.py -v
-
-# Run only fast tests
-pytest tests -v -m "not slow"
-```
-
-## 📊 Example Results
-
-### Channel Attribution
-
-| Channel | Coefficient | Contribution | Share | ROAS Index |
-|---------|------------|--------------|-------|------------|
-| Search  | 118.45     | 45.23        | 38.2% | 1.00       |
-| Social  | 76.32      | 30.41        | 25.7% | 0.64       |
-| Audio   | 52.18      | 23.02        | 19.4% | 0.44       |
-| Display | 38.91      | 19.72        | 16.7% | 0.33       |
-
-### Model Performance
-
-| Metric | Value |
-|--------|-------|
-| R² | 0.952 |
-| Adjusted R² | 0.949 |
-| RMSE | 18.45 |
-| MAE | 14.21 |
-| MAPE | 4.82% |
-| Durbin-Watson | 1.92 |
-
-## 🏗️ Project Structure
+## 📁 Project Structure
 
 ```
 mmm-analytics/
@@ -389,14 +407,70 @@ mmm-analytics/
 │   └── diagnostics/
 │       ├── metrics.py        # Statistical metrics
 │       └── plots.py          # Visualization
-├── tests/                    # Comprehensive test suite
+├── tests/                    # 151 tests
+├── assets/                   # Documentation images
 ├── .github/workflows/        # CI/CD pipelines
 ├── pyproject.toml           # Project configuration
-├── README.md
-├── CONTRIBUTING.md
-├── CHANGELOG.md
-└── LICENSE
+└── README.md
 ```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+python -m pytest tests -v
+
+# Run with coverage
+python -m pytest tests --cov=mmm_analytics --cov-report=html
+
+# Run specific test module
+python -m pytest tests/test_transforms.py -v
+```
+
+**Test Results:** 151 tests passing ✅
+
+---
+
+## 🔄 CI/CD Pipeline
+
+```mermaid
+flowchart LR
+    subgraph Triggers["Triggers"]
+        A[Push to main]
+        B[Pull Request]
+    end
+    
+    subgraph Pipeline["CI Pipeline"]
+        C[Lint - Ruff]
+        D[Type Check - MyPy]
+        E[Test Matrix]
+        F[Coverage]
+        G[Security Scan]
+        H[Build Package]
+    end
+    
+    subgraph TestMatrix["Test Matrix"]
+        E1[Python 3.10]
+        E2[Python 3.11]
+        E3[Python 3.12]
+        E4[Ubuntu]
+        E5[Windows]
+        E6[macOS]
+    end
+    
+    A --> C
+    B --> C
+    C --> D --> E --> F --> G --> H
+    E --> TestMatrix
+    
+    style Triggers fill:#e3f2fd
+    style Pipeline fill:#fff3e0
+    style TestMatrix fill:#e8f5e9
+```
+
+---
 
 ## 🤝 Contributing
 
@@ -417,11 +491,13 @@ source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 pip install -e ".[dev]"
 
 # Run tests
-pytest tests -v
+python -m pytest tests -v
 
 # Run linting
 ruff check mmm_analytics tests
 ```
+
+---
 
 ## 📚 References
 
@@ -437,14 +513,22 @@ ruff check mmm_analytics tests
 - [PyMC-Marketing](https://github.com/pymc-labs/pymc-marketing) - PyMC Labs MMM
 - [Robyn](https://github.com/facebookexperimental/Robyn) - Meta's MMM solution
 
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+---
+
 ## 👤 Author
 
-**Sai Santhosh V C**
+**Sai Santhosh V**
 
 - GitHub: [@saisanthoshv](https://github.com/Sai-Santhosh)
 
 ---
+
+<p align="center">
+  Made with ❤️ for the Ad Tech & Media Analytics community
+</p>
