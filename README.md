@@ -443,12 +443,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Sai Santhosh V**
+**Sai Santhosh V C**
 
-- GitHub: [@saisanthoshv](https://github.com/saisanthoshv)
+- GitHub: [@saisanthoshv](https://github.com/Sai-Santhosh)
 
 ---
-
-<p align="center">
-  Made with ❤️ for the Ad Tech & Media Analytics community
-</p>
